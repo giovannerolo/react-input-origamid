@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import Input from './Form/Input';
+import useForm from './Hooks/useForm';
 
-function App() {
+const App = () => {
+  const cep = useForm('cep');
+  const email = useForm('email');
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    if (cep.validate() && email.validate()) {
+      console.log('Enviar');
+    } else {
+      console.log('Não enviar');
+    }
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <Input label="Email" id="email" type="email" {...email} />
+      <Input
+        label="CEP"
+        id="cep"
+        type="text"
+        placeholder="00000-000"
+        {...cep}
+      />
+      <button>Enviar</button>
+    </form>
   );
-}
+};
 
 export default App;
